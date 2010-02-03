@@ -1,0 +1,195 @@
+// !$*UTF8*$!
+{
+	256AC3D80F4B6AC300CF3369 /* CocoaGLBoothAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {701, 446}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 327}";
+		};
+	};
+	256AC3D90F4B6AC300CF3369 /* CocoaGLBoothAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {701, 446}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 385}";
+		};
+	};
+	256AC3F00F4B6AF500CF3369 /* CocoaGLBooth_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {793, 565}}";
+			sepNavSelRange = "{155, 0}";
+			sepNavVisRange = "{0, 155}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeArchitecturePreference = i386;
+		activeBuildConfigurationName = Debug;
+		activeExecutable = B9DA3FA911134981004E9114 /* CocoaGLBooth */;
+		activeTarget = 8D1107260486CEB800E47090 /* CocoaGLBooth */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* CocoaGLBooth */,
+		);
+		codeSenseManager = B9DA3FBE11134985004E9114 /* Code sense */;
+		executables = (
+			B9DA3FA911134981004E9114 /* CocoaGLBooth */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					615,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 286841934;
+			PBXWorkspaceStateSaveDate = 286841934;
+		};
+		perUserProjectItems = {
+			B991C4231118DF6A008A6BF2 /* PBXTextBookmark */ = B991C4231118DF6A008A6BF2 /* PBXTextBookmark */;
+			B991C4781118E303008A6BF2 /* PBXTextBookmark */ = B991C4781118E303008A6BF2 /* PBXTextBookmark */;
+			B991C4791118E303008A6BF2 /* PBXTextBookmark */ = B991C4791118E303008A6BF2 /* PBXTextBookmark */;
+			B991C4F111193181008A6BF2 /* PBXTextBookmark */ = B991C4F111193181008A6BF2 /* PBXTextBookmark */;
+		};
+		sourceControlManager = B9DA3FBD11134985004E9114 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* CocoaGLBooth */ = {
+		activeExec = 0;
+		executables = (
+			B9DA3FA911134981004E9114 /* CocoaGLBooth */,
+		);
+	};
+	B991C4231118DF6A008A6BF2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B9DA401511134BFF004E9114 /* BoothGLView.h */;
+		name = "BoothGLView.h: 23";
+		rLen = 0;
+		rLoc = 457;
+		rType = 0;
+		vrLen = 539;
+		vrLoc = 0;
+	};
+	B991C4781118E303008A6BF2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 256AC3F00F4B6AF500CF3369 /* CocoaGLBooth_Prefix.pch */;
+		name = "CocoaGLBooth_Prefix.pch: 8";
+		rLen = 0;
+		rLoc = 155;
+		rType = 0;
+		vrLen = 155;
+		vrLoc = 0;
+	};
+	B991C4791118E303008A6BF2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B9DA401611134BFF004E9114 /* BoothGLView.m */;
+		name = "BoothGLView.m: 150";
+		rLen = 0;
+		rLoc = 4238;
+		rType = 0;
+		vrLen = 1627;
+		vrLoc = 3938;
+	};
+	B991C4F111193181008A6BF2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B9DA401611134BFF004E9114 /* BoothGLView.m */;
+		name = "BoothGLView.m: 12";
+		rLen = 0;
+		rLoc = 206;
+		rType = 0;
+		vrLen = 1039;
+		vrLoc = 0;
+	};
+	B9DA3FA911134981004E9114 /* CocoaGLBooth */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = CocoaGLBooth;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	B9DA3FBD11134985004E9114 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	B9DA3FBE11134985004E9114 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	B9DA3FC011134A3E004E9114 /* Controller.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {941, 484}}";
+			sepNavSelRange = "{305, 0}";
+			sepNavVisRange = "{0, 733}";
+			sepNavWindowFrame = "{{15, 502}, {702, 671}}";
+		};
+	};
+	B9DA3FC111134A3E004E9114 /* Controller.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {964, 2314}}";
+			sepNavSelRange = "{5359, 0}";
+			sepNavVisRange = "{4593, 1279}";
+		};
+	};
+	B9DA401511134BFF004E9114 /* BoothGLView.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {793, 853}}";
+			sepNavSelRange = "{457, 0}";
+			sepNavVisRange = "{0, 539}";
+			sepNavWindowFrame = "{{19, 500}, {702, 671}}";
+		};
+	};
+	B9DA401611134BFF004E9114 /* BoothGLView.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1029, 2574}}";
+			sepNavSelRange = "{2990, 0}";
+			sepNavVisRange = "{2016, 1204}";
+			sepNavWindowFrame = "{{107, 107}, {702, 671}}";
+		};
+	};
+}
