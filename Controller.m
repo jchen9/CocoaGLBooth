@@ -74,16 +74,16 @@
 		 */
         
 			// Create the movie file output and add it to the session
-		mCapturePreviewOutput = [[QTCaptureVideoPreviewOutput alloc] init];
 			// mCapturePreviewOutput = [[QTCaptureDecompressedVideoOutput alloc] init];
+		mCapturePreviewOutput = [[QTCaptureVideoPreviewOutput alloc] init];
+			// [mCapturePreviewOutput setVisualContext:textureContext forConnection:[[mCapturePreviewOutput connections] lastObject]];
+		[mCapturePreviewOutput setDelegate:self];
+
 		success = [mCaptureSession addOutput:mCapturePreviewOutput error:&error];
 		if(!success) {
 			NSLog(@"Init QTCaptureVideoPreviewOutput failed.");
 		}
-		
-			// [mCapturePreviewOutput setVisualContext:textureContext forConnection:[[mCapturePreviewOutput connections] lastObject]];
-		[mCapturePreviewOutput setDelegate:self];
-		
+				
         /*
         mCaptureMovieFileOutput = [[QTCaptureMovieFileOutput alloc] init];
         success = [mCaptureSession addOutput:mCaptureMovieFileOutput error:&error];
@@ -92,8 +92,7 @@
         }
         
         [mCaptureMovieFileOutput setDelegate:self];
-		
-		
+				
 			// Set the compression for the audio/video that is recorded to the hard disk.
 		
 		NSEnumerator *connectionEnumerator = [[mCaptureMovieFileOutput connections] objectEnumerator];
@@ -120,8 +119,7 @@
 		 */
 			// Associate the capture view in the UI with the session
         
-        [mCaptureView setCaptureSession:mCaptureSession];
-       
+        [mCaptureView setCaptureSession:mCaptureSession];       
         [mCaptureSession startRunning];        
 	}	
 }
@@ -165,25 +163,15 @@
 	 withSampleBuffer:(QTSampleBuffer *)sampleBuffer 
 	   fromConnection:(QTCaptureConnection *)connection
 {
-		// NSLog(@"[Async] capture output delegate called!");
+	NSLog(@"[Async] capture output delegate called!");
 	
-		// Store the latest frame
-		// This must be done in a @synchronized block because this delegate method is not called on the main thread
-    CVImageBufferRef imageBufferToRelease;    
-    CVBufferRetain(videoFrame);
-    
-    @synchronized (self) {
-        imageBufferToRelease = mCurrentImageBuffer;
-        mCurrentImageBuffer = videoFrame;
-		[boothView setCurrentFrame:mCurrentImageBuffer];
-    }
-
+		// DEBUG: about videoFrame's textureCoord
 	/*
-    GLfloat lowerLeft[2];
-    GLfloat lowerRight[2];
-    GLfloat upperRight[2];
-    GLfloat upperLeft[2];
-    
+	GLfloat lowerLeft[2];
+	GLfloat lowerRight[2];
+	GLfloat upperRight[2];
+	GLfloat upperLeft[2];
+	
 	CVOpenGLTextureGetCleanTexCoords(mCurrentImageBuffer, 
 									 lowerLeft, 
 									 lowerRight, 
@@ -195,6 +183,17 @@
 	NSLog(@"upperRight: %.2f\t%.2f", upperRight[0], upperRight[1]);
 	NSLog(@"upperLeft:  %.2f\t%.2f", upperLeft[0],  upperLeft[1]);
 	*/
+		// Store the latest frame
+		// This must be done in a @synchronized block because this delegate method is not called on the main thread
+    CVImageBufferRef imageBufferToRelease;    
+    CVBufferRetain(videoFrame);
+    
+    @synchronized (self) {
+        imageBufferToRelease = mCurrentImageBuffer;
+        mCurrentImageBuffer = videoFrame;			
+		
+		[boothView setCurrentFrame:CVBufferRetain(mCurrentImageBuffer)];
+    }
 	
     CVBufferRelease(imageBufferToRelease);
 }
@@ -203,6 +202,30 @@
 - (IBAction) fullScreenMode:(id)sender
 {
 	[boothView setFullScreenMode];
+}
+
+- (IBAction) captureStillImage:(id)sender
+{
+    CVImageBufferRef imageBuffer;
+    
+    @synchronized (self) {
+        imageBuffer = CVBufferRetain(mCurrentImageBuffer);
+    }
+    
+    if (imageBuffer) {
+			// Create an NSImage and add it to the movie
+        NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:[CIImage imageWithCVImageBuffer:imageBuffer]];
+        NSImage *image = [[[NSImage alloc] initWithSize:[imageRep size]] autorelease];
+        [image addRepresentation:imageRep];
+        CVBufferRelease(imageBuffer);
+        
+		if ([stillImageView image] != nil) {
+			[[stillImageView image] release];
+		}
+		
+		[stillImageView setImage:image];
+		[stillImageView setNeedsDisplay:YES];
+    }	
 }
 
 @end

@@ -143,28 +143,31 @@ static void drawCube (GLfloat fSize)
 #pragma mark Accessors
 - (void) setCurrentFrame:(CVImageBufferRef) aFrameRef
 {
-	currentFrame = aFrameRef;
+	currentFrame = CVBufferRetain(aFrameRef);
 	
 	if (currentFrame == nil) {
 		NSLog(@"Nil currentFrame after setting!!!");
 		return;
 	}	
 
-	GLuint tName = CVOpenGLTextureGetName(aFrameRef);
+	GLuint tName = CVOpenGLTextureGetName(currentFrame);
 
 	NSLog(@"Booth currentFrame update! %d", tName);
 	
-	CVOpenGLTextureGetCleanTexCoords(aFrameRef, 
+	CVOpenGLTextureGetCleanTexCoords(currentFrame, 
 									 lowerLeft, 
 									 lowerRight, 
 									 upperRight, 
 									 upperLeft);		 
-/*
+
+	/*
 	NSLog(@"lowerLeft:  %.2f\t%.2f", lowerLeft[0],  lowerLeft[1]);
 	NSLog(@"lowerRight: %.2f\t%.2f", lowerRight[0], lowerRight[1]);
 	NSLog(@"upperRight: %.2f\t%.2f", upperRight[0], upperRight[1]);
 	NSLog(@"upperLeft:  %.2f\t%.2f", upperLeft[0],  upperLeft[1]);
- */
+	 */
+	
+	CVBufferRelease(aFrameRef);
 }
 
 #pragma mark -
@@ -376,9 +379,6 @@ static void drawCube (GLfloat fSize)
 
 #pragma mark -
 #pragma mark Public - Key Events
-
-	//---------------------------------------------------------------------------
-
 - (void) keyDown:(NSEvent *)theEvent
 {
 	NSString  *characters = [theEvent charactersIgnoringModifiers];
@@ -389,13 +389,13 @@ static void drawCube (GLfloat fSize)
 		if( [self isInFullScreenMode] )
 		{
 			[self fullScreenDisable];
-		} // if
+		}
 		else
 		{
 			[self fullScreenEnable];
-		} // if
-    } // if
-} // keyDown
+		}
+    }
+}
 
 #pragma mark -
 #pragma mark Mouse Events

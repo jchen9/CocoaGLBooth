@@ -15,6 +15,7 @@
 		// Outlets for UI elements
 	IBOutlet QTCaptureView  *mCaptureView;
 	IBOutlet BoothGLView	*boothView;
+	IBOutlet NSImageView	*stillImageView;
 	
 		// For QuickTime capture
 	QTCaptureSession            *mCaptureSession;
@@ -28,4 +29,5 @@
 }
 
 - (IBAction) fullScreenMode:(id)sender;
+- (IBAction) captureStillImage:(id)sender;
 @end
