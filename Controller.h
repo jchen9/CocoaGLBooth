@@ -27,4 +27,5 @@
 	CVImageBufferRef                    mCurrentImageBuffer;
 }
 
+- (IBAction) fullScreenMode:(id)sender;
 @end

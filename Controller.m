@@ -165,7 +165,7 @@
 	 withSampleBuffer:(QTSampleBuffer *)sampleBuffer 
 	   fromConnection:(QTCaptureConnection *)connection
 {
-		// NSLog(@"[async] capture output delegate called!");
+		// NSLog(@"[Async] capture output delegate called!");
 	
 		// Store the latest frame
 		// This must be done in a @synchronized block because this delegate method is not called on the main thread
@@ -175,10 +175,34 @@
     @synchronized (self) {
         imageBufferToRelease = mCurrentImageBuffer;
         mCurrentImageBuffer = videoFrame;
-			// [boothView setCurrentFrame:mCurrentImageBuffer];
+		[boothView setCurrentFrame:mCurrentImageBuffer];
     }
+
+	/*
+    GLfloat lowerLeft[2];
+    GLfloat lowerRight[2];
+    GLfloat upperRight[2];
+    GLfloat upperLeft[2];
     
+	CVOpenGLTextureGetCleanTexCoords(mCurrentImageBuffer, 
+									 lowerLeft, 
+									 lowerRight, 
+									 upperRight, 
+									 upperLeft);		 
+	
+	NSLog(@"lowerLeft:  %.2f\t%.2f", lowerLeft[0],  lowerLeft[1]);
+	NSLog(@"lowerRight: %.2f\t%.2f", lowerRight[0], lowerRight[1]);
+	NSLog(@"upperRight: %.2f\t%.2f", upperRight[0], upperRight[1]);
+	NSLog(@"upperLeft:  %.2f\t%.2f", upperLeft[0],  upperLeft[1]);
+	*/
+	
     CVBufferRelease(imageBufferToRelease);
+}
+
+#pragma mark IBActions
+- (IBAction) fullScreenMode:(id)sender
+{
+	[boothView setFullScreenMode];
 }
 
 @end
