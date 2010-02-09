@@ -12,6 +12,9 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		B949196E1120AF430043924F /* trackball.c in Sources */ = {isa = PBXBuildFile; fileRef = B94919681120AF430043924F /* trackball.c */; };
+		B949196F1120AF430043924F /* GLString.m in Sources */ = {isa = PBXBuildFile; fileRef = B94919691120AF430043924F /* GLString.m */; };
+		B9491B411120C5980043924F /* README in Resources */ = {isa = PBXBuildFile; fileRef = B9491B401120C5980043924F /* README */; };
 		B9CD20781118C7540053EA29 /* unixad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9CD20771118C7540053EA29 /* unixad.jpg */; };
 		B9DA163A111374B200D02A99 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DA1639111374B200D02A99 /* QuartzCore.framework */; };
 		B9DA3FC211134A3E004E9114 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = B9DA3FC111134A3E004E9114 /* Controller.m */; };
@@ -33,6 +36,11 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* CocoaGLBooth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CocoaGLBooth-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* CocoaGLBooth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoaGLBooth.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94919671120AF430043924F /* trackball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trackball.h; sourceTree = "<group>"; };
+		B94919681120AF430043924F /* trackball.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = trackball.c; sourceTree = "<group>"; };
+		B94919691120AF430043924F /* GLString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLString.m; sourceTree = "<group>"; };
+		B949196A1120AF430043924F /* GLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLString.h; sourceTree = "<group>"; };
+		B9491B401120C5980043924F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		B9CD20771118C7540053EA29 /* unixad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unixad.jpg; sourceTree = "<group>"; };
 		B9DA1639111374B200D02A99 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B9DA3FC011134A3E004E9114 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
@@ -103,7 +111,8 @@
 		29B97314FDCFA39411CA2CEA /* CocoaGLBooth */ = {
 			isa = PBXGroup;
 			children = (
-				B9DA170A111380F400D02A99 /* GLSL */,
+				B9491D28112104410043924F /* Utils */,
+				B9491B401120C5980043924F /* README */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -142,6 +151,34 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B94919641120AF430043924F /* GL Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B94919671120AF430043924F /* trackball.h */,
+				B94919681120AF430043924F /* trackball.c */,
+				B94919691120AF430043924F /* GLString.m */,
+				B949196A1120AF430043924F /* GLString.h */,
+			);
+			name = "GL Utilities";
+			sourceTree = "<group>";
+		};
+		B9491C2E1120FE930043924F /* OBJ loader */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "OBJ loader";
+			sourceTree = "<group>";
+		};
+		B9491D28112104410043924F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B94919641120AF430043924F /* GL Utilities */,
+				B9491C2E1120FE930043924F /* OBJ loader */,
+				B9DA170A111380F400D02A99 /* GLSL */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		B9DA170A111380F400D02A99 /* GLSL */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +212,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "EVL, UIC";
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CocoaGLBooth" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
@@ -195,6 +235,7 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				B9CD20781118C7540053EA29 /* unixad.jpg in Resources */,
+				B9491B411120C5980043924F /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +250,8 @@
 				256AC3DA0F4B6AC300CF3369 /* CocoaGLBoothAppDelegate.m in Sources */,
 				B9DA3FC211134A3E004E9114 /* Controller.m in Sources */,
 				B9DA401711134BFF004E9114 /* BoothGLView.m in Sources */,
+				B949196E1120AF430043924F /* trackball.c in Sources */,
+				B949196F1120AF430043924F /* GLString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +282,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -256,6 +303,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CocoaGLBooth_Prefix.pch;
@@ -275,7 +326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -287,7 +338,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
