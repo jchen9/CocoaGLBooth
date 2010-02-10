@@ -1358,7 +1358,7 @@
 							<reference key="NSSuperview" ref="439893737"/>
 							<object class="NSOpenGLPixelFormat" key="NSPixelFormat">
 								<object class="NSMutableData" key="NSPixelAttributes">
-									<bytes key="NS.bytes">AAAABQAAAGAAAAAMAAAAEAAAAAA</bytes>
+									<bytes key="NS.bytes">AAAABQAAAGAAAAAMAAAAGAAAAAA</bytes>
 								</object>
 							</object>
 						</object>
@@ -3701,9 +3701,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{315, 176}, {848, 520}}</string>
+					<string>{{420, 178}, {848, 520}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{315, 176}, {848, 520}}</string>
+					<string>{{420, 178}, {848, 520}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>
