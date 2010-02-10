@@ -428,13 +428,21 @@ static void drawCube (GLfloat fSize)
 	else if ([theEvent modifierFlags] & NSAlternateKeyMask) // send to dolly
 		[self otherMouseDown:theEvent];
 	else {
-		NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		location.y = camera.viewHeight - location.y;
-		gDolly = GL_FALSE; // no dolly
-		gPan = GL_FALSE; // no pan
-		gTrackball = GL_TRUE;
-		startTrackball (location.x, location.y, 0, 0, camera.viewWidth, camera.viewHeight);
-		gTrackingViewInfo = self;
+		if ([theEvent clickCount] >= 2) {
+			if ([self isInFullScreenMode]) {
+				[self fullScreenDisable];
+			} else {
+				[self fullScreenEnable];				
+			}
+		} else {
+			NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+			location.y = camera.viewHeight - location.y;
+			gDolly = GL_FALSE; // no dolly
+			gPan = GL_FALSE; // no pan
+			gTrackball = GL_TRUE;
+			startTrackball (location.x, location.y, 0, 0, camera.viewWidth, camera.viewHeight);
+			gTrackingViewInfo = self;			
+		}		
 	}
 }
 
