@@ -281,13 +281,15 @@ static void drawCube (GLfloat fSize)
 		// glEnable(GL_CULL_FACE);
 		// glPolygonOffset (1.0f, 1.0f);
 	
-		// Antialias blending
-	glEnable(GL_LINE_SMOOTH);
+		// Point & line antialiasing
+		// TODO: add polygon anti-aliasing: specialized blending function; or use accum buffer
 	glEnable(GL_BLEND);
+	glEnable(GL_POLYGON_SMOOTH);
+	glEnable(GL_LINE_SMOOTH);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_DONT_CARE);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
 		
 		// default background color
 	glClearColor(0.098f, 0.2f, 0.4f, 0.0f);

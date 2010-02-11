@@ -218,11 +218,7 @@
         NSImage *image = [[[NSImage alloc] initWithSize:[imageRep size]] autorelease];
         [image addRepresentation:imageRep];
         CVBufferRelease(imageBuffer);
-        
-		if ([stillImageView image] != nil) {
-			[[stillImageView image] release];
-		}
-		
+        		
 		[stillImageView setImage:image];
 		[stillImageView setNeedsDisplay:YES];
     }	
