@@ -21,6 +21,7 @@
 		B9DA400711134B64004E9114 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DA400611134B64004E9114 /* QTKit.framework */; };
 		B9DA401711134BFF004E9114 /* BoothGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9DA401611134BFF004E9114 /* BoothGLView.m */; };
 		B9DA406F11134ED1004E9114 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DA406E11134ED1004E9114 /* OpenGL.framework */; };
+		B9E550271123BA2300624660 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9E550261123BA2300624660 /* QuickTime.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		B9DA401511134BFF004E9114 /* BoothGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoothGLView.h; sourceTree = "<group>"; };
 		B9DA401611134BFF004E9114 /* BoothGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoothGLView.m; sourceTree = "<group>"; };
 		B9DA406E11134ED1004E9114 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		B9E550261123BA2300624660 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				B9DA400711134B64004E9114 /* QTKit.framework in Frameworks */,
 				B9DA406F11134ED1004E9114 /* OpenGL.framework in Frameworks */,
 				B9DA163A111374B200D02A99 /* QuartzCore.framework in Frameworks */,
+				B9E550271123BA2300624660 /* QuickTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +89,7 @@
 				B9DA400611134B64004E9114 /* QTKit.framework */,
 				B9DA406E11134ED1004E9114 /* OpenGL.framework */,
 				B9DA1639111374B200D02A99 /* QuartzCore.framework */,
+				B9E550261123BA2300624660 /* QuickTime.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";

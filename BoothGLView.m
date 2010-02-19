@@ -141,33 +141,41 @@ static void drawCube (GLfloat fSize)
 
 #pragma mark -
 #pragma mark Accessors
+static bool isFirstFrame = YES;
 - (void) setCurrentFrame:(CVImageBufferRef) aFrameRef
 {
+		// NSLog(@"BoothGLView setCurrentFrame.");
+
 	currentFrame = CVBufferRetain(aFrameRef);
 	
-	if (currentFrame == nil) {
-		NSLog(@"Nil currentFrame after setting!!!");
-		return;
-	}	
-
-	GLuint tName = CVOpenGLTextureGetName(currentFrame);
-
-	NSLog(@"Booth currentFrame update! %d", tName);
-	
-	CVOpenGLTextureGetCleanTexCoords(currentFrame, 
-									 lowerLeft, 
-									 lowerRight, 
-									 upperRight, 
-									 upperLeft);		 
-
-	/*
-	NSLog(@"lowerLeft:  %.2f\t%.2f", lowerLeft[0],  lowerLeft[1]);
-	NSLog(@"lowerRight: %.2f\t%.2f", lowerRight[0], lowerRight[1]);
-	NSLog(@"upperRight: %.2f\t%.2f", upperRight[0], upperRight[1]);
-	NSLog(@"upperLeft:  %.2f\t%.2f", upperLeft[0],  upperLeft[1]);
-	 */
-	
-	CVBufferRelease(aFrameRef);
+	if(currentFrame) {
+		CGSize size = CVImageBufferGetDisplaySize(currentFrame);
+		imageWidth = size.width;
+		imageHeight = size.height;
+		
+		[[self openGLContext] makeCurrentContext];
+		GLuint texName   = CVOpenGLTextureGetName(currentFrame);
+		NSLog(@"Current frame texture name: %d", texName);
+		
+		CVOpenGLTextureGetCleanTexCoords(currentFrame, 
+										 lowerLeft, 
+										 lowerRight, 
+										 upperRight, 
+										 upperLeft);
+		
+			// DEBUG: test if the CVImageBuffer is valid
+		if(isFirstFrame == YES) {
+				// Create a NSImage
+			NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:[CIImage imageWithCVImageBuffer:currentFrame]];
+			NSImage *image = [[[NSImage alloc] initWithSize:[imageRep size]] autorelease];
+			[image addRepresentation:imageRep];
+			
+			NSData *tiffData = [image TIFFRepresentation];
+			[tiffData writeToFile:@"/Users/julian/Desktop/FirstFrame.tiff" atomically:NO];
+			
+			isFirstFrame = NO;
+		}		
+	}
 }
 
 #pragma mark -
@@ -178,12 +186,20 @@ static void drawCube (GLfloat fSize)
 	{
 		glMatrixMode(GL_TEXTURE);
 		glLoadIdentity();
-		glEnable(GL_TEXTURE_RECTANGLE_EXT);
 		
 		glMatrixMode(GL_MODELVIEW);		
 		glScalef(2 * imageWidth / imageHeight, 2 * 1, 1.0f);
 		
-		glBindTexture (GL_TEXTURE_RECTANGLE_EXT, mytexName);	
+		glEnable(GL_TEXTURE_RECTANGLE_EXT);
+
+		GLint texId = mytexName;
+		
+		if(currentFrame) {
+				// CVOpenGLBufferAttach(currentFrame, [self openGLContext], face, level, screen);
+			texId = CVOpenGLTextureGetName(currentFrame);
+		}		
+		glBindTexture (GL_TEXTURE_RECTANGLE_EXT, texId);
+		
 		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT,  GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT,  GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri (GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -302,6 +318,9 @@ static void drawCube (GLfloat fSize)
 
 		// Load the default texture
 	[self prepareDefaultImgTexture];
+	
+		// init display link
+	[self initDisplayLink];	
 }
 					
 	// http://www.cocoabuilder.com/archive/cocoa/194722-opengl-texture-initialization-in-10-5.html
@@ -369,9 +388,10 @@ static void drawCube (GLfloat fSize)
 - (void) awakeFromNib
 {
 		// Default values
+	currentFrame = nil;
 	imageWidth = 640;
 	imageHeight = 480;
-	
+		
 		// start animation timer
 	timer = [NSTimer timerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(animationTimer:) userInfo:nil repeats:YES];
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
@@ -641,6 +661,108 @@ static void drawCube (GLfloat fSize)
 	if (YES == shouldDraw) {
 		[self drawRect:[self bounds]]; // redraw now instead dirty to enable updates during live resize
 	}
+}
+
+#pragma mark -
+#pragma mark Display link callbacks
+CVReturn MyDisplayLinkCallback (
+								CVDisplayLinkRef displayLink,
+								const CVTimeStamp *inNow,
+								const CVTimeStamp *inOutputTime,
+								CVOptionFlags flagsIn,
+								CVOptionFlags *flagsOut,
+								void *displayLinkContext)
+{
+	/*
+	CVReturn error = [(MyVideoView*) displayLinkContext displayFrame:inOutputTime];
+	return error;
+	 */
+	NSLog(@"My Display Link Callback.");
+	
+	return kCVReturnSuccess;
+}
+
+static CVReturn renderCallback(CVDisplayLinkRef displayLink, 
+							   const CVTimeStamp *inNow, 
+							   const CVTimeStamp *inOutputTime, 
+							   CVOptionFlags flagsIn, 
+							   CVOptionFlags *flagsOut, 
+							   void *displayLinkContext)
+{
+	NSLog(@"render callback.");
+	
+	return kCVReturnSuccess;
+		// return [(VideoView*)displayLinkContext renderTime:inOutputTime];	
+}
+
+#pragma mark -
+#pragma mark Display Link init
+- (void) initDisplayLink
+{	
+	NSLog(@"Init display link in BoothGLView.");
+
+		// Create display link 
+	CGOpenGLDisplayMask	totalDisplayMask = 0;
+	int     virtualScreen;
+	GLint    displayMask, accelerated;
+	NSOpenGLPixelFormat	*openGLPixelFormat = [self pixelFormat];
+	
+		// build up list of displays from OpenGL's pixel format
+	for (virtualScreen = 0; virtualScreen < [openGLPixelFormat  numberOfVirtualScreens]; virtualScreen++) {
+		[openGLPixelFormat getValues:&displayMask forAttribute:NSOpenGLPFAScreenMask forVirtualScreen:virtualScreen];
+        [openGLPixelFormat getValues:&accelerated forAttribute:NSOpenGLPFAAccelerated forVirtualScreen:virtualScreen];
+        
+        if (accelerated) {
+            totalDisplayMask |= displayMask;
+        }
+	}
+    
+	CVReturn ret;
+	ret = CVDisplayLinkCreateWithOpenGLDisplayMask(totalDisplayMask, &displayLink);
+	
+		// Set up display link callbacks 
+	CVDisplayLinkSetOutputCallback(displayLink, renderCallback, self);
+		
+	/*
+    CVReturn            error = kCVReturnSuccess;
+    CGDirectDisplayID   displayID = CGMainDisplayID();// 1
+	
+    error = CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink);// 2
+    if(error)
+    {
+        NSLog(@"DisplayLink created with error:%d", error);
+        displayLink = NULL;
+        return;
+    }
+	
+    error = CVDisplayLinkSetOutputCallback(displayLink,// 3
+										   MyDisplayLinkCallback, self);
+	
+		// create QTGLContext
+		// OSStatus theError = QTOpenGLTextureContextCreate( NULL, NULL, 
+		// 											 [[NSOpenGLView defaultPixelFormat] CGLPixelFormatObj], 
+		// 											 NULL, &qtVisualContext);
+	
+	OSStatus theError = noErr;
+
+	NSDictionary *targetDimensions = [NSDictionary dictionaryWithObjectsAndKeys:
+									  [NSNumber numberWithFloat:720.0], kQTVisualContextTargetDimensions_WidthKey, 
+									  [NSNumber numberWithFloat:480.0], kQTVisualContextTargetDimensions_HeightKey, nil];
+	
+	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys: targetDimensions,  kQTVisualContextTargetDimensionsKey,
+								displayColorSpace, kQTVisualContextOutputColorSpaceKey, nil];
+
+	error = QTOpenGLTextureContextCreate(kCFAllocatorDefault, (CGLContextObj)[[self openGLContext] CGLContextObj],
+										 (CGLPixelFormatObj)[[self pixelFormat] CGLPixelFormatObj],
+										 (CFDictionaryRef)attributes,
+										 &qtVisualContext);
+		
+	if(qtVisualContext == NULL)
+	{
+        NSLog(@"QTVisualContext creation failed with error:%d", theError);
+        return;
+    }
+	 */
 }
 
 @end

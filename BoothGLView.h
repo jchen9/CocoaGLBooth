@@ -9,9 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <QTKit/QTKit.h>
+
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
 
+#pragma mark -
+#pragma mark Global Camera parameters
 	// Camera structure
 typedef struct {
 	GLdouble x,y,z;
@@ -26,9 +29,9 @@ typedef struct {
 	GLint viewWidth, viewHeight; // current window/screen height and width
 } recCamera;
 
-@interface BoothGLView : NSOpenGLView {
-	CVImageBufferRef currentFrame;
-	
+#pragma mark -
+#pragma mark BoothGLView interface
+@interface BoothGLView : NSOpenGLView {	
     GLfloat lowerLeft[2];
     GLfloat lowerRight[2];
     GLfloat upperRight[2];
@@ -49,15 +52,29 @@ typedef struct {
 	NSTimer *timer;
 	
 		// for OpenGL fullscreen
-	NSScreen                 *fullScreen;
-	NSDictionary             *fullScreenOptions;	
+	NSScreen            *fullScreen;
+	NSDictionary        *fullScreenOptions;	
+	
+		// Core Video display link
+	CVImageBufferRef	currentFrame;
+	NSRecursiveLock		*lock;
+	CVDisplayLinkRef	displayLink;
+    CGDirectDisplayID	viewDisplayID;	
+	QTVisualContextRef  qtVisualContext;
+	    // color space
+    CGColorSpaceRef     displayColorSpace;
 }
 
+#pragma mark -
+#pragma mark Display link init
+- (void) initDisplayLink;
+
+#pragma mark -
 - (void) prepareDefaultImgTexture;
 - (void) setCurrentFrame:(CVImageBufferRef) aFrameRef;
-
 - (void) setFullScreenMode;
 
+#pragma mark -
 #pragma mark Mouse Events
 - (void) mouseDown:(NSEvent *)theEvent;
 - (void) rightMouseDown:(NSEvent *)theEvent;
@@ -70,12 +87,15 @@ typedef struct {
 - (void) rightMouseDragged:(NSEvent *)theEvent;
 - (void) otherMouseDragged:(NSEvent *)theEvent;
 
+#pragma mark -
 #pragma mark Utils
 - (void) updateProjection;
 - (void) updateModelView;
 - (void) resizeGL;
 - (void) resetCamera;
 
+#pragma mark -
+#pragma mark Misc
 - (void) update;
 - (void)animationTimer:(NSTimer *)timer;
 

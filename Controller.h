@@ -20,12 +20,12 @@
 		// For QuickTime capture
 	QTCaptureSession            *mCaptureSession;
 	QTCaptureVideoPreviewOutput *mCapturePreviewOutput;
-		// QTCaptureDecompressedVideoOutput *mCapturePreviewOutput;
-	
+		// QTCaptureDecompressedVideoOutput *mCapturePreviewOutput;	
     QTCaptureDeviceInput        *mCaptureVideoDeviceInput;
 		// QTCaptureDeviceInput        *mCaptureAudioDeviceInput;	
 	
-	CVImageBufferRef                    mCurrentImageBuffer;
+		// Current frame buffer	
+	CVImageBufferRef                    mCurrentImageBuffer;		
 }
 
 - (IBAction) fullScreenMode:(id)sender;

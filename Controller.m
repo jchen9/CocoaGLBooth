@@ -163,10 +163,10 @@
 	 withSampleBuffer:(QTSampleBuffer *)sampleBuffer 
 	   fromConnection:(QTCaptureConnection *)connection
 {
-	NSLog(@"[Async] capture output delegate called!");
-	
 		// DEBUG: about videoFrame's textureCoord
 	/*
+	NSLog(@"[Async] capture output delegate called!");
+	 
 	GLfloat lowerLeft[2];
 	GLfloat lowerRight[2];
 	GLfloat upperRight[2];
@@ -183,8 +183,10 @@
 	NSLog(@"upperRight: %.2f\t%.2f", upperRight[0], upperRight[1]);
 	NSLog(@"upperLeft:  %.2f\t%.2f", upperLeft[0],  upperLeft[1]);
 	*/
+	
 		// Store the latest frame
-		// This must be done in a @synchronized block because this delegate method is not called on the main thread
+		// This must be done in a @synchronized block 
+		// because this delegate method is not called on the main thread
     CVImageBufferRef imageBufferToRelease;    
     CVBufferRetain(videoFrame);
     
@@ -192,9 +194,9 @@
         imageBufferToRelease = mCurrentImageBuffer;
         mCurrentImageBuffer = videoFrame;			
 		
-		[boothView setCurrentFrame:CVBufferRetain(mCurrentImageBuffer)];
+		[boothView setCurrentFrame:mCurrentImageBuffer];
     }
-	
+		
     CVBufferRelease(imageBufferToRelease);
 }
 
